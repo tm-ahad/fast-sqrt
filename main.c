@@ -30,22 +30,26 @@ int* split_num_by_last_one(int inp) {
 }
 
 float fast_sqrt(int inp) {
-    const float mu = 0.0686593357;
+    const float mu = 0.498;
 
-    if (inp < 16) {
-        float hexsqrtable[15] = {
-            1, 
-            1.41421356237,1.73205080757, 
-            2,
-            2.2360679775,2.44948974278,
-            2.64575131106,2.82842712475,
-            3,
-            3.16227766017,3.31662479036,
-            3.46410161514,3.60555127546,
-            3.74165738677,3.87298334621
+    if (inp < 32) {
+        float _32bitsqrtable[31] = {
+            1,1.414213,1.732050,
+            2,2.2360,2.449489,
+            2.645751,2.828427,
+            3,3.162277,3.316624,
+            3.464101,3.605551,
+            3.741657,3.872983,
+            4,4.12310,4.242640,
+            4.358898,4.472135,
+            4.582575,4.690415,
+            4.795831,4.898979,
+            5,5.09901,5.196152,
+            5.291502,5.385164,
+            5.477225,5.567764
         };
 
-        return hexsqrtable[inp-1];
+        return _32bitsqrtable[inp-1];
     } else {
         bool add_const = false;
         if (inp % 2 != 0) {
@@ -57,7 +61,7 @@ float fast_sqrt(int inp) {
         float res = fast_sqrt(s[0]) * fast_sqrt(s[1]);
 
         if (add_const) {
-            res += mu;
+            res += mu/res;
         }
 
         return res;
@@ -65,7 +69,7 @@ float fast_sqrt(int inp) {
 }
 
 int main() {
-    int inp ;
+    int inp = 0;
 
     printf("Define sqrt of ");
     scanf("%d", &inp);
